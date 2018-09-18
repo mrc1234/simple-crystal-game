@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>simple crystal game</title>
+
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+
+  <style type="text/css">
+    .crystal-image {
+      width: 300px;
+      height: 300px;
+      display: inline;
+    }
+
+    /* .jumbotron {
+      width: 300px;
+      height:200px; */
+    /* } */
+    /* .card-body {
+      flex: 1 1 auto;
+    padding: 1.25rem;
+      width: 600px;
+      height:600px;
+    }
+    .card {
+        flex: 1 1 auto;
+    padding: 1.25rem;
+      width: 600px;
+      height:600px;
+    } */
+  </style>
+</head>
+
+<body>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Crystal Collector</h1>
+      <p class="lead"></p>
+    </div>
+  </div>
+  <div class="card bg-light mb-3">
+
+    <div class="card-body col-lg-12">
+      <p class="card-text col-lg-12">Here's how the app works:
+
+        * There will be four crystals displayed as buttons on the page.
+
+        * The player will be shown a random number at the start of the game.
+
+        * When the player clicks on a crystal, it will add a specific amount of points to the player's total score.
+
+        * Your game will hide this amount until the player clicks a crystal.
+        * When they do click one, update the player's score counter.
+
+        * The player wins if their total score matches the random number from the beginning of the game.
+
+        * The player loses if their score goes above the random number.
+
+        * The game restarts whenever the player wins or loses.
+
+        * When the game begins again, the player should see a new random number. Also, all the crystals will have four
+        new hidden values. Of course, the user's score (and score counter) will reset to zero.
+
+        * The app should show the number of games the player wins and loses. To that end, do not refresh the page as a
+        means to restart the game.
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.
+          With supporting text below as a natural lead-in to additional content
+          With supporting text below as a natural lead-in to additional content
+          With supporting text below as a natural lead-in to additional content
+          With supporting text below as a natural lead-in to additional content
+          With supporting text below as a natural lead-in to additional content
+        </p>
+      </div>
+    </div>
+    <!-- Calculator Card -->
+    <div class="col-lg-12">
+
+
+
+      <button id="button-1" class="btn btn-primary number h1" value="1"></button>
+      <button id="button-2" class="btn btn-primary number h2" value="2">0</button>
+
+      <div style="background-color:blue; color:white;width:5rem;">
+        <label>Wins:</label>
+        <span id="wins">0</span>
+        <label>Loses:</label>
+        <span id="lost">0</span>
+      </div>
+
+
+      <!-- Note that this div is now empty. We will fill it dynamically -->
+      <div id="crystals">
+      </div>
+      <div id="head"></div>
+
+
+      <!-- JAVASCRIPT -->
+      <!-- ========================================= -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+      <script type="text/javascript">
+
+        var targetNumber = 53;
+
+        $("#number-to-guess").text(targetNumber);
+
+        var counter = 0;
+        var wins = 0;
+        var lost = 0;
+
+        // Now for the hard part. Creating multiple crystals each with their own unique number value.
+        var numberOptions = [];
+        var increment = function () {
+          //return numberOptions[ Math.round((Math.random()*12))+1]; //returning an array 
+          return Math.round((Math.random() * 12)) + 1; //returns value
+        }
+        // We begin by expanding our array to include four options.
+        // var numberOptions = [10, 5, 3, 7];
+
+        $("#button-1").text(targetNumber);
+
+        // Next we create a for loop to create crystals for every numberOption.
+        for (var i = 0; i < 4; i++) {  //numberOptions.length
+
+          // For each iteration, we will create an imageCrystal
+          var imageCrystal = $("<img>");
+
+          // First each crystal will be given the class ".crystal-image".
+          // This will allow the CSS to take effect.
+
+          imageCrystal.addClass("crystal-image");
+
+          // Each imageCrystal will be given a src link to the crystal image
+          imageCrystal.attr("src", "http://cdn.playbuzz.com/cdn/35910209-2844-45c0-b099-f4d82878d54f/00261fda-4062-4096-81fd-8cf96b9034e8.jpg");
+
+          console.log(increment())
+          // Each imageCrystal will be given a data attribute called data-crystalValue.
+          // This data attribute will be set equal to the array value.
+          imageCrystal.attr("data-crystalvalue", increment());//value
+
+          // Lastly, each crystal image (with all it classes and attributes) will get added to the page.
+          $("#crystals").append(imageCrystal);
+        }
+
+        // This time, our click event applies to every single crystal on the page. Not just one.
+        $(".crystal-image").on("click", function () {
+
+          // Determining the crystal's value requires us to extract the value from the data attribute.
+          // Using the $(this) keyword specifies that we should be extracting the crystal value of the clicked crystal.
+          // Using the .attr("data-crystalvalue") allows us to grab the value out of the "data-crystalvalue" attribute.
+          // Since attributes on HTML elements are strings, we must convert it to an integer before adding to the counter
+
+          var crystalValue = ($(this).attr("data-crystalvalue"));
+          crystalValue = parseInt(crystalValue);
+          // We then add the crystalValue to the user's "counter" which is a global variable.
+          // Every click, from every crystal adds to the global counter.
+          counter += crystalValue;
+
+          // All of the same game win-lose logic applies. So the rest remains unchanged.
+          $("#button-2").text(counter);
+          if (counter === targetNumber) {
+            alert("You win!");
+            restart("won");
+            //reload page 
+          }
+
+          else if (counter >= targetNumber) {
+            alert("You lose!!");
+            restart("lost");
+            //reload page
+          }
+
+          function restart(outcome) {
+            $("#button-2").text(0);
+            if (outcome === "won") {
+              wins++;
+              $('#wins').text(wins);
+            } else if (outcome === "lost") {
+              lost++;
+              $('#lost').text(lost);
+            }
+            counter = 0;
+          }
+
+        });
+
+      </script>
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+</body>
+
+</html>
